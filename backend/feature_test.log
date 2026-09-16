@@ -1,0 +1,168 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.example:backend >-------------------------
+[INFO] Building  0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ backend ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ backend ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 203 source files with javac [debug release 21] to target\classes
+[INFO] /C:/Restaurant Project/backend/src/main/java/com/example/backend/customer/service/CartService.java: C:\Restaurant Project\backend\src\main\java\com\example\backend\customer\service\CartService.java uses unchecked or unsafe operations.
+[INFO] /C:/Restaurant Project/backend/src/main/java/com/example/backend/customer/service/CartService.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ backend ---
+[INFO] skip non existing resourceDirectory C:\Restaurant Project\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ backend ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 13 source files with javac [debug release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ backend ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.backend.customer.CustomerAppFeatureIntegrationTests
+22:53:23.756 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.backend.customer.CustomerAppFeatureIntegrationTests]: CustomerAppFeatureIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:24.012 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.backend.BackendApplication for test class com.example.backend.customer.CustomerAppFeatureIntegrationTests
+22:53:24.161 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.backend.customer.CustomerAppFeatureIntegrationTests]: CustomerAppFeatureIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:24.164 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.backend.BackendApplication for test class com.example.backend.customer.CustomerAppFeatureIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-08-30T22:53:24.701+05:30  WARN 24544 --- [backend] [           main] ory$DuplicateJsonObjectContextCustomizer : 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Admin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Admin/.m2/repository/org/json/json/20231013/json-20231013.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2026-08-30T22:53:24.720+05:30  INFO 24544 --- [backend] [           main] e.b.c.CustomerAppFeatureIntegrationTests : Starting CustomerAppFeatureIntegrationTests using Java 22.0.2 with PID 24544 (started by Admin in C:\Restaurant Project\backend)
+2026-08-30T22:53:24.721+05:30  INFO 24544 --- [backend] [           main] e.b.c.CustomerAppFeatureIntegrationTests : No active profile set, falling back to 1 default profile: "default"
+2026-08-30T22:53:26.705+05:30  INFO 24544 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-30T22:53:27.004+05:30  INFO 24544 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 285 ms. Found 40 JPA repository interfaces.
+2026-08-30T22:53:28.083+05:30  INFO 24544 --- [backend] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-08-30T22:53:28.199+05:30  INFO 24544 --- [backend] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.1.Final
+2026-08-30T22:53:29.144+05:30  INFO 24544 --- [backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-30T22:53:29.204+05:30  INFO 24544 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-08-30T22:53:29.520+05:30  INFO 24544 --- [backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3e0e0ba7
+2026-08-30T22:53:29.523+05:30  INFO 24544 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-08-30T22:53:29.585+05:30  WARN 24544 --- [backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-30T22:53:29.636+05:30  INFO 24544 --- [backend] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/restaurant_pos]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.4
+	Default catalog/schema: restaurant_pos/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-30T22:53:32.419+05:30  INFO 24544 --- [backend] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-30T22:53:32.561+05:30  INFO 24544 --- [backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-30T22:53:32.705+05:30  INFO 24544 --- [backend] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-08-30T22:53:33.230+05:30  INFO 24544 --- [backend] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
+2026-08-30T22:53:35.095+05:30  WARN 24544 --- [backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-30T22:53:36.254+05:30  INFO 24544 --- [backend] [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-08-30T22:53:36.255+05:30  INFO 24544 --- [backend] [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2673ba1f]]
+2026-08-30T22:53:36.256+05:30  INFO 24544 --- [backend] [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-08-30T22:53:36.265+05:30  INFO 24544 --- [backend] [           main] e.b.c.CustomerAppFeatureIntegrationTests : Started CustomerAppFeatureIntegrationTests in 12.017 seconds (process running for 14.397)
+Hibernate: select a1_0.admin_id,a1_0.admin_access_level,a1_0.email,a1_0.is_active,a1_0.name,a1_0.password,a1_0.phone_number,a1_0.username from admins a1_0 where a1_0.username=?
+Hibernate: select a1_0.admin_id,a1_0.admin_access_level,a1_0.email,a1_0.is_active,a1_0.name,a1_0.password,a1_0.phone_number,a1_0.username from admins a1_0 where a1_0.admin_id=?
+Hibernate: update admins set admin_access_level=?,email=?,is_active=?,name=?,password=?,phone_number=?,username=? where admin_id=?
+Hibernate: select s1_0.staff_id,s1_0.email,s1_0.employment_type,s1_0.is_active,s1_0.name,s1_0.outlet_id,s1_0.phone_number,s1_0.pin_hash,s1_0.role,s1_0.section from staff s1_0 where s1_0.name=?
+Hibernate: select s1_0.staff_id,s1_0.email,s1_0.employment_type,s1_0.is_active,s1_0.name,s1_0.outlet_id,s1_0.phone_number,s1_0.pin_hash,s1_0.role,s1_0.section from staff s1_0 where s1_0.staff_id=?
+Hibernate: update staff set email=?,employment_type=?,is_active=?,name=?,outlet_id=?,phone_number=?,pin_hash=?,role=?,section=? where staff_id=?
+Hibernate: select s1_0.staff_id,s1_0.email,s1_0.employment_type,s1_0.is_active,s1_0.name,s1_0.outlet_id,s1_0.phone_number,s1_0.pin_hash,s1_0.role,s1_0.section from staff s1_0 where s1_0.name=?
+Hibernate: select s1_0.staff_id,s1_0.email,s1_0.employment_type,s1_0.is_active,s1_0.name,s1_0.outlet_id,s1_0.phone_number,s1_0.pin_hash,s1_0.role,s1_0.section from staff s1_0 where s1_0.staff_id=?
+Hibernate: update staff set email=?,employment_type=?,is_active=?,name=?,outlet_id=?,phone_number=?,pin_hash=?,role=?,section=? where staff_id=?
+Hibernate: select s1_0.staff_id,s1_0.email,s1_0.employment_type,s1_0.is_active,s1_0.name,s1_0.outlet_id,s1_0.phone_number,s1_0.pin_hash,s1_0.role,s1_0.section from staff s1_0 where s1_0.name=?
+Hibernate: select s1_0.staff_id,s1_0.email,s1_0.employment_type,s1_0.is_active,s1_0.name,s1_0.outlet_id,s1_0.phone_number,s1_0.pin_hash,s1_0.role,s1_0.section from staff s1_0 where s1_0.staff_id=?
+Hibernate: update staff set email=?,employment_type=?,is_active=?,name=?,outlet_id=?,phone_number=?,pin_hash=?,role=?,section=? where staff_id=?
+Hibernate: select s1_0.staff_id,s1_0.email,s1_0.employment_type,s1_0.is_active,s1_0.name,s1_0.outlet_id,s1_0.phone_number,s1_0.pin_hash,s1_0.role,s1_0.section from staff s1_0 where s1_0.name=?
+Hibernate: select s1_0.staff_id,s1_0.email,s1_0.employment_type,s1_0.is_active,s1_0.name,s1_0.outlet_id,s1_0.phone_number,s1_0.pin_hash,s1_0.role,s1_0.section from staff s1_0 where s1_0.staff_id=?
+Hibernate: update staff set email=?,employment_type=?,is_active=?,name=?,outlet_id=?,phone_number=?,pin_hash=?,role=?,section=? where staff_id=?
+Hibernate: select count(*) from customers c1_0
+Hibernate: select c1_0.category_id,c1_0.name,c1_0.parent_id from categories c1_0
+Hibernate: select count(*) from menu_items mi1_0
+Hibernate: select count(*) from tables rt1_0
+Hibernate: select count(*) from inventory_items ii1_0
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\Admin\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.10\byte-buddy-agent-1.18.10.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=? and ci1_0.cart_item_id=?
+Hibernate: insert into cart_items (cart_item_id,is_veg,item_description,item_image_url,item_name,item_price,menu_item_id,phone,quantity,selected_modifiers,special_instructions,id) values (?,?,?,?,?,?,?,?,?,?,?,?)
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: insert into cart_sessions (applied_coupon,discount_amount,phone,id) values (?,?,?,?)
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: delete from cart_items where id=?
+Hibernate: delete from cart_sessions where id=?
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select count(*) from categories c1_0
+Hibernate: select mi1_0.item_id,mi1_0.allergens,mi1_0.available_from,mi1_0.available_to,mi1_0.calories,mi1_0.category_id,mi1_0.description,mi1_0.food_type,mi1_0.gst_rate,mi1_0.hsn_code,mi1_0.image_url,mi1_0.is_available,mi1_0.is_combo,mi1_0.is_special,mi1_0.is_veg,mi1_0.name,mi1_0.outlet_id,mi1_0.price,mi1_0.price_delivery,mi1_0.price_takeaway,mi1_0.special_price,mi1_0.station_id from menu_items mi1_0
+Hibernate: select c1_0.category_id,c1_0.name,c1_0.parent_id from categories c1_0 where c1_0.category_id=?
+Hibernate: select c1_0.category_id,c1_0.name,c1_0.parent_id from categories c1_0 where c1_0.category_id=?
+Hibernate: select c1_0.category_id,c1_0.name,c1_0.parent_id from categories c1_0 where c1_0.category_id=?
+Hibernate: select c1_0.category_id,c1_0.name,c1_0.parent_id from categories c1_0 where c1_0.category_id=?
+Hibernate: select w1_0.id,w1_0.created_at,w1_0.menu_item_id,w1_0.phone from wishlists w1_0 where w1_0.phone=? and w1_0.menu_item_id=?
+Hibernate: insert into wishlists (created_at,menu_item_id,phone,id) values (?,?,?,?)
+Hibernate: select count(*) from categories c1_0
+Hibernate: select w1_0.id,w1_0.created_at,w1_0.menu_item_id,w1_0.phone from wishlists w1_0 where w1_0.phone=?
+Hibernate: select mi1_0.item_id,mi1_0.allergens,mi1_0.available_from,mi1_0.available_to,mi1_0.calories,mi1_0.category_id,mi1_0.description,mi1_0.food_type,mi1_0.gst_rate,mi1_0.hsn_code,mi1_0.image_url,mi1_0.is_available,mi1_0.is_combo,mi1_0.is_special,mi1_0.is_veg,mi1_0.name,mi1_0.outlet_id,mi1_0.price,mi1_0.price_delivery,mi1_0.price_takeaway,mi1_0.special_price,mi1_0.station_id from menu_items mi1_0 where mi1_0.item_id in (?)
+Hibernate: select c1_0.category_id,c1_0.name,c1_0.parent_id from categories c1_0 where c1_0.category_id=?
+Hibernate: select w1_0.id,w1_0.created_at,w1_0.menu_item_id,w1_0.phone from wishlists w1_0 where w1_0.phone=? and w1_0.menu_item_id=?
+Hibernate: select w1_0.id,w1_0.created_at,w1_0.menu_item_id,w1_0.phone from wishlists w1_0 where w1_0.phone=? and w1_0.menu_item_id=?
+Hibernate: delete from wishlists where id=?
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select ci1_0.id,ci1_0.cart_item_id,ci1_0.is_veg,ci1_0.item_description,ci1_0.item_image_url,ci1_0.item_name,ci1_0.item_price,ci1_0.menu_item_id,ci1_0.phone,ci1_0.quantity,ci1_0.selected_modifiers,ci1_0.special_instructions from cart_items ci1_0 where ci1_0.phone=?
+Hibernate: select cs1_0.id,cs1_0.applied_coupon,cs1_0.discount_amount,cs1_0.phone from cart_sessions cs1_0 where cs1_0.phone=?
+Hibernate: select c1_0.customer_id,c1_0.birthday,c1_0.email,c1_0.is_vip,c1_0.last_visit_at,c1_0.loyalty_points,c1_0.name,c1_0.otp_code,c1_0.otp_verified,c1_0.phone,c1_0.points_earned,c1_0.points_redeemed,c1_0.total_spend,c1_0.total_visits from customers c1_0
+Hibernate: select c1_0.customer_id,c1_0.birthday,c1_0.email,c1_0.is_vip,c1_0.last_visit_at,c1_0.loyalty_points,c1_0.name,c1_0.otp_code,c1_0.otp_verified,c1_0.phone,c1_0.points_earned,c1_0.points_redeemed,c1_0.total_spend,c1_0.total_visits from customers c1_0 where c1_0.phone=?
+Hibernate: insert into customers (birthday,email,is_vip,last_visit_at,loyalty_points,name,otp_code,otp_verified,phone,points_earned,points_redeemed,total_spend,total_visits,customer_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.17 s -- in com.example.backend.customer.CustomerAppFeatureIntegrationTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  35.482 s
+[INFO] Finished at: 2026-08-30T22:53:38+05:30
+[INFO] ------------------------------------------------------------------------

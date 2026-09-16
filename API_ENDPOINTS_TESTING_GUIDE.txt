@@ -1,0 +1,788 @@
+================================================================================
+          RESTAURANT POS & ORDER MANAGEMENT SYSTEM - COMPLETE API GUIDE
+================================================================================
+This document provides a complete, module-wise catalog of all API endpoints in
+the system from scratch for testing, API client collection (Postman/Insomnia),
+and automated integration testing.
+
+Base URL: http://localhost:8080
+Content-Type: application/json
+Authorization Header: Bearer <JWT_TOKEN>
+
+================================================================================
+MODULE 0: AUTHENTICATION & REGISTRATION (/api/auth)
+================================================================================
+
+1. System Admin Registration
+   POST /api/auth/register
+   Headers: Content-Type: application/json
+   Request Body:
+   {
+     "username": "admin1",
+     "email": "admin@restaurant.com",
+     "password": "Password123!",
+     "fullName": "Main System Admin",
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+   }
+   Response: Status 200 OK (Admin object)
+
+2. User Login (Obtain JWT Token)
+   POST /api/auth/login
+   Headers: Content-Type: application/json
+   Request Body:
+   {
+     "email": "admin@restaurant.com",
+     "password": "Password123!"
+   }
+   Response: Status 200 OK
+   {
+     "token": "<JWT_BEARER_TOKEN>",
+     "role": "ADMIN",
+     "username": "admin1"
+   }
+
+================================================================================
+MODULE 1: ADMIN MANAGEMENT (/api/v1/admin) [Role: ADMIN]
+================================================================================
+
+1. Get All Admins
+   GET /api/v1/admin
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Response: Status 200 OK (List of Admins)
+
+2. Get Admin By ID
+   GET /api/v1/admin/{id}
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Response: Status 200 OK (Admin object)
+
+3. Create New Admin
+   POST /api/v1/admin
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Request Body:
+   {
+     "username": "outlet_admin_1",
+     "email": "outlet1@restaurant.com",
+     "password": "Password123!",
+     "fullName": "Outlet Manager Admin",
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+   }
+   Response: Status 201 Created
+
+4. Update Admin Details
+   PUT /api/v1/admin/{id}
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Request Body:
+   {
+     "username": "outlet_admin_1_updated",
+     "email": "outlet1_updated@restaurant.com",
+     "password": "NewPassword123!",
+     "fullName": "Updated Admin Name",
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+   }
+   Response: Status 200 OK
+
+5. Delete Admin
+   DELETE /api/v1/admin/{id}
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Response: Status 244 No Content
+
+6. Toggle Admin Active Status
+   PATCH /api/v1/admin/{id}/toggle-active
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Response: Status 200 OK
+
+================================================================================
+MODULE 2: STAFF & ACCESS CONTROL MANAGEMENT (/api/staff)
+================================================================================
+
+1. Get All Staff Members
+   GET /api/staff
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Response: Status 200 OK
+
+2. Get Staff Member By ID
+   GET /api/staff/{id}
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Response: Status 200 OK
+
+3. Register Staff Member [Role: ADMIN]
+   POST /api/staff
+   Headers: Authorization: Bearer <JWT_TOKEN>
+   Request Body:
+   {
+     "name": "Captain Rahul",
+     "pin": "1234",
+     "role": "CAPTAIN",
+     "section": "Main Hall",
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "employmentType": "FULL_TIME"
+   }
+   Response: Status 201 Created
+
+4. Staff PIN-based POS Login
+   POST /api/staff/login-pin
+   Request Body:
+   {
+     "pin": "1234"
+   }
+   Response: Status 200 OK (PIN session details + token)
+
+5. Staff Shift Clock-In
+   POST /api/staff/clock-in?name=Captain Rahul&pin=1234
+   Response: Status 200 OK (AttendanceLog object)
+
+6. Staff Shift Clock-Out
+   POST /api/staff/clock-out?name=Captain Rahul&pin=1234
+   Response: Status 200 OK (AttendanceLog object with shift duration)
+
+7. Create Shift [Role: ADMIN]
+   POST /api/staff/shifts
+   Request Body:
+   {
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "shiftName": "Morning Shift",
+     "startTime": "08:00:00",
+     "endTime": "16:00:00"
+   }
+   Response: Status 201 Created
+
+8. Assign Staff to Shift [Role: MANAGER, ADMIN]
+   POST /api/staff/shifts/assign
+   Request Body:
+   {
+     "staffId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "shiftId": "4fa85f64-5717-4562-b3fc-2c963f66afa7",
+     "shiftDate": "2026-07-19"
+   }
+   Response: Status 200 OK
+
+9. Log Manager Audit Trail [Role: MANAGER]
+   POST /api/staff/audit?action=VOID_BILL&orderId=<ORDER_ID>&amount=150.00&reason=Customer Complaint&managerPin=9999
+   Response: Status 200 OK
+
+10. Get Staff Individual Performance Metrics [Role: MANAGER, ADMIN]
+    GET /api/staff/{id}/performance
+    Response: Status 200 OK (Covers, revenue, accuracy, shift hours)
+
+11. Export Payroll Report (CSV Download) [Role: ADMIN]
+    GET /api/staff/payroll/export
+    Response: Status 200 OK (Content-Type: text/csv)
+
+12. Update Staff Member [Role: ADMIN]
+    PUT /api/staff/{id}
+    Request Body: (Same as StaffRequest)
+
+13. Delete Staff Member [Role: ADMIN]
+    DELETE /api/staff/{id}
+
+14. Toggle Staff Active Status [Role: ADMIN]
+    PATCH /api/staff/{id}/toggle-active
+
+================================================================================
+MODULE 3: TABLE & WAITLIST MANAGEMENT (/api/v1/tables, /api/v1/waitlist)
+================================================================================
+
+--- Tables ---
+1. Get Tables by Outlet [Roles: CASHIER, CAPTAIN, MANAGER]
+   GET /api/v1/tables/{outletId}
+
+2. Get All Tables [Roles: CASHIER, CAPTAIN, MANAGER, ADMIN]
+   GET /api/v1/tables
+
+3. Create Table [Role: ADMIN]
+   POST /api/v1/tables
+   Request Body:
+   {
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "tableNumber": "T1",
+     "capacity": 4,
+     "section": "Main Hall",
+     "status": "AVAILABLE",
+     "xPos": 10,
+     "yPos": 20
+   }
+
+4. Update Table Layout [Role: ADMIN]
+   PUT /api/v1/tables/{id}
+
+5. Delete Table [Role: ADMIN]
+   DELETE /api/v1/tables/{id}
+
+6. Bulk Update Table Floor Layout [Role: ADMIN]
+   PUT /api/v1/tables/bulk
+   Request Body: List of RestaurantTable objects
+
+7. Assign Order to Table [Roles: CAPTAIN, MANAGER]
+   PUT /api/v1/tables/{id}/assign?orderId=<ORDER_ID>
+
+8. Update Table Status [Roles: CASHIER, CAPTAIN, MANAGER]
+   PUT /api/v1/tables/{id}/status?status=OCCUPIED
+
+9. Merge Tables [Roles: CAPTAIN, MANAGER]
+   POST /api/v1/tables/merge?primaryTableId=<TABLE_1_ID>
+   Request Body: ["<TABLE_2_ID>", "<TABLE_3_ID>"]
+
+10. Unmerge Tables [Roles: CAPTAIN, MANAGER]
+    POST /api/v1/tables/unmerge?primaryTableId=<TABLE_1_ID>
+
+11. Transfer Table Order [Roles: CAPTAIN, MANAGER]
+    POST /api/v1/tables/transfer?sourceTableId=<SOURCE_ID>&destinationTableId=<DEST_ID>
+
+12. Update Table Covers Count [Roles: CAPTAIN, MANAGER]
+    PUT /api/v1/tables/{id}/covers?count=4
+
+13. Get Average Table Turn Time [Roles: MANAGER, ADMIN]
+    GET /api/v1/tables/analytics/turn-time
+
+--- Waitlist ---
+14. Get Active Waitlist [Roles: CASHIER, CAPTAIN, MANAGER, ADMIN]
+    GET /api/v1/waitlist?outletId=<OUTLET_ID>
+
+15. Add Walk-in Guest to Waitlist [Roles: CASHIER, CAPTAIN, MANAGER]
+    POST /api/v1/waitlist
+    Request Body:
+    {
+      "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "guestName": "John Doe",
+      "guestPhone": "9876543210",
+      "partySize": 4
+    }
+
+16. Seat Guest from Waitlist [Roles: CAPTAIN, MANAGER]
+    PUT /api/v1/waitlist/{id}/seat?tableId=<TABLE_ID>
+
+17. Cancel Waitlist Entry [Roles: CASHIER, CAPTAIN, MANAGER]
+    PUT /api/v1/waitlist/{id}/cancel
+
+================================================================================
+MODULE 4: MENU, CATEGORIES, MODIFIERS, COMBOS & STATIONS (/api/v1/menu)
+================================================================================
+
+1. Get All Categories
+   GET /api/v1/menu/categories
+
+2. Create Category [Roles: ADMIN, MANAGER]
+   POST /api/v1/menu/categories
+   Request Body:
+   {
+     "name": "Starters",
+     "description": "Appetizers and snacks",
+     "displayOrder": 1
+   }
+
+3. Get All Menu Items
+   GET /api/v1/menu/items
+
+4. Get Menu Items by Category
+   GET /api/v1/menu/items/category/{categoryId}
+
+5. Get Active Time-Based Menu Items
+   GET /api/v1/menu/items/active?time=13:30:00
+
+6. Create Menu Item [Roles: ADMIN, MANAGER]
+   POST /api/v1/menu/items
+   Request Body:
+   {
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "name": "Paneer Butter Masala",
+     "price": 280.00,
+     "gstRate": 5.0,
+     "foodType": "Veg",
+     "isAvailable": true,
+     "station": "HOT"
+   }
+
+7. Update Menu Item [Roles: ADMIN, MANAGER]
+   PUT /api/v1/menu/items/{id}
+
+8. Toggle Item Availability [Roles: ADMIN, MANAGER]
+   PATCH /api/v1/menu/items/{id}/toggle-availability
+
+9. Mark Item 86'd / Available [Roles: ADMIN, MANAGER, KITCHEN]
+   PATCH /api/v1/menu/items/{id}/86?available=false
+
+10. Get Daily Specials
+    GET /api/v1/menu/items/specials
+
+11. Set Daily Special [Roles: ADMIN, MANAGER]
+    PUT /api/v1/menu/items/{id}/special?special=true&specialPrice=250.00
+
+12. Get Modifier Groups for Item
+    GET /api/v1/menu/items/{itemId}/modifier-groups
+
+13. Create Modifier Group [Roles: ADMIN, MANAGER]
+    POST /api/v1/menu/modifier-groups
+    Request Body:
+    {
+      "menuItemId": "<ITEM_ID>",
+      "name": "Spice Level",
+      "minSelection": 1,
+      "maxSelection": 1
+    }
+
+14. Get Options for Modifier Group
+    GET /api/v1/menu/modifier-groups/{groupId}/options
+
+15. Create Modifier Option [Roles: ADMIN, MANAGER]
+    POST /api/v1/menu/modifier-options
+    Request Body:
+    {
+      "groupId": "<GROUP_ID>",
+      "name": "Extra Spicy",
+      "price": 20.00
+    }
+
+16. Get Combo Components
+    GET /api/v1/menu/items/{comboItemId}/combo-components
+
+17. Add Combo Component [Roles: ADMIN, MANAGER]
+    POST /api/v1/menu/combo-components
+
+18. Get Digital QR Code (PNG Image)
+    GET /api/v1/menu/outlets/{outletId}/qr
+
+--- Kitchen Stations (/api/v1/kitchen-stations) ---
+19. Get Kitchen Stations
+    GET /api/v1/kitchen-stations
+
+20. Create Kitchen Station [Role: ADMIN]
+    POST /api/v1/kitchen-stations
+    Request Body: { "name": "GRILL" }
+
+21. Delete Kitchen Station [Role: ADMIN]
+    DELETE /api/v1/kitchen-stations/{id}
+
+================================================================================
+MODULE 5: ORDER PROCESSING & KOT MANAGEMENT (/api/v1/orders)
+================================================================================
+
+1. Get All Orders
+   GET /api/v1/orders
+
+2. Get Order By ID
+   GET /api/v1/orders/{id}
+
+3. Get Order Items
+   GET /api/v1/orders/{id}/items
+
+4. Create New Order [Roles: CASHIER, CAPTAIN, MANAGER]
+   POST /api/v1/orders
+   Request Body:
+   {
+     "order": {
+       "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+       "tableId": "<TABLE_ID>",
+       "orderType": "DINE_IN",
+       "covers": 2
+     },
+     "items": [
+       {
+         "menuItemId": "<ITEM_ID>",
+         "quantity": 2,
+         "unitPrice": 150.00,
+         "course": "Main Course"
+       }
+     ]
+   }
+
+5. Fire KOT to Kitchen [Roles: CASHIER, CAPTAIN, MANAGER]
+   PUT /api/v1/orders/{id}/fire-kot
+
+6. Fire Fine Dining Course Sequence [Roles: CASHIER, CAPTAIN, MANAGER]
+   PUT /api/v1/orders/{id}/fire-course?course=Starters
+
+7. Void Order Item (Requires Manager PIN) [Roles: CASHIER, CAPTAIN, MANAGER]
+   DELETE /api/v1/orders/items/{itemId}?managerPin=9999
+
+8. Get Draft Orders by Table
+   GET /api/v1/orders/drafts/table/{tableId}
+
+9. Get Draft Orders by Token
+   GET /api/v1/orders/drafts/token/{token}
+
+10. Modify Order Items [Roles: CAPTAIN, MANAGER]
+    PUT /api/v1/orders/{id}/modify?managerPin=9999
+    Request Body: List of OrderItem objects
+
+11. Split Order Items [Roles: CASHIER, CAPTAIN, MANAGER]
+    POST /api/v1/orders/{id}/split
+    Request Body: List of OrderItemSplitRequest objects
+
+12. Apply Item-Level Discount [Roles: CAPTAIN, MANAGER]
+    PUT /api/v1/orders/items/{orderItemId}/discount?discountAmount=20.00&managerPin=9999
+
+13. Mark Item Complimentary [Roles: CAPTAIN, MANAGER]
+    PUT /api/v1/orders/items/{orderItemId}/complimentary?managerPin=9999
+
+14. Get Order Lifecycle Audit Timeline [Roles: CAPTAIN, MANAGER, ADMIN]
+    GET /api/v1/orders/{id}/timeline
+
+================================================================================
+MODULE 6: KITCHEN DISPLAY SYSTEM - KDS (/api/v1/kds) [Role: KITCHEN]
+================================================================================
+
+1. Get Active KOTs by Kitchen Station
+   GET /api/v1/kds/{stationId}/orders
+
+2. Bump KOT Item (Mark Prepared)
+   PUT /api/v1/kds/items/{itemId}/bump
+
+3. Get Last 5 Recalled Bumped Orders
+   GET /api/v1/kds/{stationId}/recalled
+
+4. Get Kitchen Preparation Performance Metrics
+   GET /api/v1/kds/performance?stationId=<STATION_ID>
+
+5. Sync Offline Bump Actions
+   POST /api/v1/kds/sync
+   Request Body:
+   {
+     "bumpedItemIds": ["<ITEM_1_ID>", "<ITEM_2_ID>"]
+   }
+
+================================================================================
+MODULE 7: PAYMENT PROCESSING, BILLING & RECEIPTS (/api/v1)
+================================================================================
+
+1. Get All Bills
+   GET /api/v1/bills
+
+2. Get Bill By ID
+   GET /api/v1/bills/{id}
+
+3. Generate GST Invoice [Role: CASHIER]
+   POST /api/v1/bills?orderId=<ORDER_ID>&discountAmount=0&customerPhone=9876543210&pointsToRedeem=50&managerPin=9999
+
+4. Settle Bill (Single Payment Method) [Role: CASHIER]
+   POST /api/v1/bills/{id}/settle?customerPhone=9876543210
+   Request Body (JSON string): "UPI" or "CASH" or "CARD"
+
+5. Settle Bill Split (Multiple Payment Methods up to 4) [Role: CASHIER]
+   POST /api/v1/bills/{id}/settle-split
+   Request Body:
+   {
+     "payments": [
+       {"method": "CASH", "amount": 200.00},
+       {"method": "UPI", "amount": 115.00}
+     ],
+     "customerPhone": "9876543210",
+     "tipAmount": 20.00
+   }
+
+6. Split Bill Equally Across Guests [Role: CASHIER]
+   POST /api/v1/bills/split/equal?orderId=<ORDER_ID>&numGuests=3&managerPin=9999
+
+7. Split Bill by Item Selection [Role: CASHIER]
+   POST /api/v1/bills/split/items?orderId=<ORDER_ID>
+   Request Body:
+   {
+     "itemGroups": [
+       ["<ITEM_1_ID>", "<ITEM_2_ID>"],
+       ["<ITEM_3_ID>"]
+     ],
+     "managerPin": "9999"
+   }
+
+8. Get Formatted Thermal Receipt Text [Roles: CASHIER, MANAGER]
+   GET /api/v1/bills/{id}/receipt
+
+9. Send Digital Receipt via SMS/WhatsApp [Roles: CASHIER, MANAGER]
+   POST /api/v1/bills/{id}/send-digital?phoneNumber=9876543210
+
+10. Initiate Razorpay/Pine Labs Payment [Role: CASHIER]
+    POST /api/v1/payments/razorpay?orderId=<ORDER_ID>&amount=315.00
+
+11. Void Bill and Process Refund [Role: MANAGER]
+    POST /api/v1/bills/{id}/void?managerPin=9999
+
+12. Get Day-End Z-Report [Role: MANAGER]
+    GET /api/v1/reports/z-report?date=2026-07-18&managerId=<MANAGER_ID>
+
+13. Reconcile Cash Drawer [Role: MANAGER]
+    GET /api/v1/reports/cash-drawer-reconciliation?date=2026-07-18&startingCash=2000.00
+
+================================================================================
+MODULE 8: ONLINE ORDER AGGREGATION - SWIGGY / ZOMATO (/api/v1/aggregator)
+================================================================================
+
+1. Receive Aggregator Order Webhook [Roles: CASHIER, CAPTAIN, MANAGER]
+   POST /api/v1/aggregator/webhook
+   Request Body:
+   {
+     "aggregator": "SWIGGY",
+     "aggregatorOrderId": "SW-99881122",
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "items": [
+       {"menuItemName": "Paneer Butter Masala", "quantity": 1, "price": 280.00}
+     ]
+   }
+
+2. Confirm Order Prep Time to Aggregator [Roles: CASHIER, CAPTAIN, MANAGER]
+   PUT /api/v1/aggregator/orders/{id}/accept?prepTime=25
+
+3. Modify Aggregator Order Item / Out of Stock [Role: MANAGER]
+   PUT /api/v1/aggregator/orders/{orderId}/cancel-item/{itemId}?managerPin=9999
+
+4. Receive Delivery Rider Arrival ETA Update [Roles: CASHIER, MANAGER]
+   POST /api/v1/aggregator/rider-update
+   Request Body:
+   {
+     "orderId": "<ORDER_ID>",
+     "riderName": "Ramesh Kumar",
+     "riderPhone": "9811223344",
+     "etaMinutes": 10
+   }
+
+5. Reconcile Aggregator Payout vs Settlements [Role: MANAGER]
+   POST /api/v1/aggregator/reconcile?aggregator=SWIGGY&date=2026-07-18&actualPayout=4500.00
+
+6. Get Aggregator Performance Analytics [Roles: MANAGER, ADMIN]
+   GET /api/v1/aggregator/analytics
+
+================================================================================
+MODULE 9: INVENTORY & SUPPLIER MANAGEMENT (/api/v1/inventory) [Role: MANAGER]
+================================================================================
+
+1. Get Current Stock Master
+   GET /api/v1/inventory
+
+2. Record Goods Received Note (GRN) Stock Increase
+   POST /api/v1/inventory/grn?ingredientId=<ID>&quantityReceived=10.5&costPrice=120.00
+
+3. Get Low-Stock Alerts
+   GET /api/v1/inventory/alerts
+
+4. Create Supplier Profile
+   POST /api/v1/inventory/suppliers
+   Request Body:
+   {
+     "supplierName": "Fresh Dairy Farms",
+     "contactNumber": "9876500000",
+     "itemsSupplied": "Milk, Butter, Paneer"
+   }
+
+5. Get All Suppliers
+   GET /api/v1/inventory/suppliers
+
+6. Confirm Daily Opening Stock
+   POST /api/v1/inventory/daily-stock/opening
+   Request Body: List of DailyStockSetupRequest objects
+
+7. Register Daily Closing Stock (Waste Variance Tracking)
+   POST /api/v1/inventory/daily-stock/closing
+   Request Body: List of DailyStockCloseRequest objects
+
+8. Raise Purchase Order (PO) to Supplier
+   POST /api/v1/inventory/purchase-orders
+   Request Body:
+   {
+     "supplierId": "<SUPPLIER_ID>",
+     "ingredientId": "<INGREDIENT_ID>",
+     "orderedQuantity": 50.0
+   }
+
+9. Receive Purchase Order GRN
+   POST /api/v1/inventory/purchase-orders/{id}/receive
+
+10. Get Cost of Goods Sold (COGS) & Gross Margin Report
+    GET /api/v1/inventory/reports/cogs
+
+11. Get Perishable Inventory Batches (FIFO Expiry Tracking)
+    GET /api/v1/inventory/batches
+
+================================================================================
+MODULE 10: CUSTOMER CRM, LOYALTY & SMS CAMPAIGNS (/api/customers)
+================================================================================
+
+1. Get All Customer Profiles
+   GET /api/customers
+
+2. Get Customer Profile By ID
+   GET /api/customers/{id}
+
+3. Create Customer Profile
+   POST /api/customers
+   Request Body:
+   {
+     "phone": "9876543210",
+     "name": "Jane Doe",
+     "email": "jane@example.com",
+     "dateOfBirth": "1995-08-25"
+   }
+
+4. Register Customer with OTP Verification
+   POST /api/customers/register-otp
+   Request Body: Same as CustomerRequest
+
+5. Verify Customer Registration OTP
+   POST /api/customers/verify-otp
+   Request Body:
+   {
+     "phone": "9876543210",
+     "otpCode": "123456"
+   }
+
+6. Update Customer Profile
+   PUT /api/customers/{id}
+
+7. Delete Customer Profile
+   DELETE /api/customers/{id}
+
+8. Submit Customer Post-Visit Feedback Rating
+   POST /api/customers/feedback
+   Request Body:
+   {
+     "phone": "9876543210",
+     "rating": 5,
+     "comments": "Excellent food and service!"
+   }
+
+9. Toggle VIP Customer Tag [Role: MANAGER]
+   PUT /api/customers/{id}/vip?isVip=true
+
+10. Get Customer Visit & Spend Analytics [Roles: MANAGER, ADMIN]
+    GET /api/customers/{id}/analytics
+
+11. Dispatch Targeted Promotional SMS Campaign [Role: MANAGER]
+    POST /api/customers/campaign?segment=HIGH_VALUE&messageText=Special 20% discount this weekend!
+
+12. Trigger Birthday Complimentary Offer SMS Dispatch [Role: MANAGER]
+    POST /api/customers/birthday-campaign
+
+================================================================================
+MODULE 11: RESERVATION MANAGEMENT (/api/v1/reservations)
+================================================================================
+
+1. Get All Reservations
+   GET /api/v1/reservations
+
+2. Create Phone/Walk-in Reservation [Roles: MANAGER, ADMIN]
+   POST /api/v1/reservations
+   Request Body:
+   {
+     "outletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "guestName": "Robert Smith",
+     "guestPhone": "9812345678",
+     "partySize": 4,
+     "date": "2026-07-20",
+     "time": "19:30:00",
+     "specialRequests": "Window table requested",
+     "dietaryRequirements": "Nut allergy",
+     "preOrderItems": "Paneer Tikka"
+   }
+
+3. Online Self-Service Table Reservation
+   POST /api/v1/reservations/online
+   Request Body: Same as Reservation object
+
+4. Guest Self-Service Cancellation via Link
+   POST /api/v1/reservations/{id}/cancel-by-guest
+
+5. Restaurant Cancellation [Roles: MANAGER, ADMIN]
+   POST /api/v1/reservations/{id}/cancel
+
+6. Update Reservation Status [Roles: MANAGER, ADMIN]
+   PUT /api/v1/reservations/{id}/status?status=SEATED
+
+7. Get Reservation Analytics & No-Show Tracking [Roles: MANAGER, ADMIN]
+   GET /api/v1/reservations/analytics
+
+================================================================================
+MODULE 12: MULTI-OUTLET CHAIN MANAGEMENT (/api/v1/chain)
+================================================================================
+
+1. Create Brand [Role: ADMIN]
+   POST /api/v1/chain/brands
+   Request Body: { "name": "Royal Fine Dining Chain" }
+
+2. Create Outlet Branch [Role: ADMIN]
+   POST /api/v1/chain/outlets
+   Request Body:
+   {
+     "brandId": "<BRAND_ID>",
+     "name": "Downtown Outlet",
+     "address": "MG Road, Suite 100",
+     "gstin": "29AAAAA0000A1Z5"
+   }
+
+3. Get All Chain Outlets
+   GET /api/v1/chain/outlets
+
+4. Push Central Master Menu to Outlets [Role: ADMIN]
+   POST /api/v1/chain/menu/push
+   Request Body:
+   {
+     "brandId": "<BRAND_ID>",
+     "outletIds": ["<OUTLET_1_ID>", "<OUTLET_2_ID>"]
+   }
+
+5. Save Outlet-Specific Price/Availability Overrides [Roles: MANAGER, ADMIN]
+   POST /api/v1/chain/menu/override
+   Request Body:
+   {
+     "outletId": "<OUTLET_ID>",
+     "menuItemId": "<ITEM_ID>",
+     "overridePrice": 320.00,
+     "isAvailable": true
+   }
+
+6. Broadcast 86'd Item Unavailability Chain-wide [Role: ADMIN]
+   POST /api/v1/chain/menu/broadcast-unavailability?menuItemName=Salmon&isAvailable=false
+
+7. Create Brand-wide Promotional Offer [Role: ADMIN]
+   POST /api/v1/chain/promotions
+   Request Body:
+   {
+     "title": "Monsoon Festival 15% OFF",
+     "discountPercentage": 15.0
+   }
+
+8. Enable/Disable Mystery Audit Mode [Role: ADMIN]
+   PUT /api/v1/chain/outlets/{id}/mystery-audit?active=true
+
+9. Broadcast Corporate Alerts to Outlet Staff [Role: ADMIN]
+   POST /api/v1/chain/notifications/broadcast?brandId=<BRAND_ID>&title=System Upgrade&message=Maintenance tonight at 2 AM.
+
+10. Calculate Franchise Royalty (GMV % Basis) [Role: ADMIN]
+    GET /api/v1/chain/outlets/{id}/royalty
+
+11. Get Chain Consolidated Financial Report [Role: ADMIN]
+    GET /api/v1/chain/reports/consolidated
+
+12. Get Outlet Side-by-Side Comparison Benchmarks [Role: ADMIN]
+    GET /api/v1/chain/reports/comparison
+
+================================================================================
+MODULE 13: ANALYTICS & REPORTING DASHBOARDS (/api/v1/analytics)
+================================================================================
+
+1. Get Daily Sales Summary Dashboard [Roles: MANAGER, ADMIN]
+   GET /api/v1/analytics/daily-sales?startDate=2026-07-01&endDate=2026-07-18&outletId=<OUTLET_ID>
+
+2. Get Mid-Shift X-Report Live Snapshot [Roles: CASHIER, MANAGER, ADMIN]
+   GET /api/v1/analytics/x-report?outletId=<OUTLET_ID>
+
+3. Generate End-of-Day Z-Report Settlement [Roles: MANAGER, ADMIN]
+   POST /api/v1/analytics/z-report?date=2026-07-18&outletId=<OUTLET_ID>&managerId=<MANAGER_ID>
+
+4. Get Menu Item Performance & Time-of-Day Sell-Through [Roles: MANAGER, ADMIN]
+   GET /api/v1/analytics/item-performance?startDate=2026-07-01&endDate=2026-07-18&outletId=<OUTLET_ID>&category=Starters
+
+5. Get Food Cost & Theoretical vs Actual Variance Report [Roles: MANAGER, ADMIN]
+   GET /api/v1/analytics/food-cost?outletId=<OUTLET_ID>
+
+6. Get Table Turn Time & Occupancy Metrics [Roles: MANAGER, ADMIN]
+   GET /api/v1/analytics/table-analytics?outletId=<OUTLET_ID>
+
+7. Get Swiggy / Zomato / Direct Channel Aggregator Breakdown [Roles: MANAGER, ADMIN]
+   GET /api/v1/analytics/aggregator-report?outletId=<OUTLET_ID>
+
+8. Get Customer Retention & Feedback Score Dashboard [Roles: MANAGER, ADMIN]
+   GET /api/v1/analytics/customer-analytics
+
+9. Get Staff Productivity & Shift Revenue Metrics [Roles: MANAGER, ADMIN]
+   GET /api/v1/analytics/staff-productivity?outletId=<OUTLET_ID>
+
+================================================================================
+                                END OF DOCUMENT
+================================================================================
