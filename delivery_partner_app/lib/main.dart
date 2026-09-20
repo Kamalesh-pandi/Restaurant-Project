@@ -20,7 +20,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
         ChangeNotifierProvider<DutyProvider>(create: (_) => DutyProvider()),
-        ChangeNotifierProvider<DeliveryProvider>(create: (_) => DeliveryProvider()),
+        ChangeNotifierProvider<DeliveryProvider>(
+            create: (_) => DeliveryProvider()),
       ],
       child: const DeliveryPartnerApp(),
     ),
@@ -38,7 +39,9 @@ class DeliveryPartnerApp extends StatelessWidget {
           title: 'Delivery Partner',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          home: authProv.isAuthenticated ? const HomeScreen() : const LoginScreen(),
+          home: authProv.isAuthenticated
+              ? const HomeScreen()
+              : const LoginScreen(),
         );
       },
     );
