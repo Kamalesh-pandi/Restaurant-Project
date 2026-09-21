@@ -1,6 +1,7 @@
 // Centralized HTTP client using native fetch with JWT handling, error notifications, and auto-auth recovery
 
-const BASE_URL = ''; // Relative path, handled by Vite proxy to http://localhost:8080
+const RAW_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+const BASE_URL = RAW_BASE_URL.replace(/\/+$/, '');
 
 let loginPromise = null;
 
@@ -8,7 +9,7 @@ async function refreshAdminToken() {
   if (loginPromise) return loginPromise;
   loginPromise = (async () => {
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -99,7 +100,16 @@ export async function apiRequest(endpoint, method = 'GET', body = null, customHe
     }
 
     if (!response.ok) {
-      const errorMessage = typeof data === 'object' && data.message ? data.message : (typeof data === 'string' ? data : `API Error ${response.status}`);
+      let errorMessage;
+      if (typeof data === 'object' && data && data.message) {
+        errorMessage = data.message;
+      } else if (typeof data === 'string' && data.trim().startsWith('<')) {
+        errorMessage = `API Error ${response.status} (${response.statusText}): The server returned an HTML page instead of JSON. If deployed on Netlify, check that VITE_API_BASE_URL is set to your active backend server.`;
+      } else if (typeof data === 'string' && data.length > 0) {
+        errorMessage = data;
+      } else {
+        errorMessage = `API Error ${response.status}: ${response.statusText}`;
+      }
       throw new Error(errorMessage);
     }
 

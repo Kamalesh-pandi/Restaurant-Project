@@ -12,7 +12,7 @@ class ApiConfig {
       return 'http://localhost:8080/api/v1';
     }
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return 'http://10.33.108.4:8080/api/v1'; // Host machine LAN IP address
+      return 'http://172.100.134.56:8080/api/v1'; // Host machine LAN IP address
     }
     return 'http://localhost:8080/api/v1';
   }
@@ -28,7 +28,7 @@ class ApiConfig {
       // don't break LAN connectivity.
       if (!kIsWeb &&
           defaultTargetPlatform == TargetPlatform.android &&
-          (saved.contains('127.0.0.1') || saved.contains('localhost')) &&
+          (saved.contains('127.0.0.1') || saved.contains('localhost') || saved.contains('10.33.108.4')) &&
           !defaultBaseUrl.contains('127.0.0.1') &&
           !defaultBaseUrl.contains('localhost')) {
         _currentBaseUrl = defaultBaseUrl;

@@ -10,7 +10,7 @@ class ApiClient {
   final GetStorage _storage = GetStorage();
   static const List<String> _fallbackHosts = [
     'http://localhost:8080',
-    'http://10.33.108.4:8080',
+    'http://172.100.134.56:8080',
     'http://10.0.2.2:8080',
     'http://127.0.0.1:8080',
   ];

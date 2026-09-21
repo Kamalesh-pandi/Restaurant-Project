@@ -1,0 +1,20 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA Fallback: Redirect all web routes to index.html for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# OPTIONAL NETLIFY PROXY:
+# If your Spring Boot backend is hosted on a public service (such as Render, Railway, AWS, or Fly.io),
+# you can uncomment this proxy block so that Netlify automatically routes /api requests to your backend.
+# Replace https://your-backend-service.onrender.com with your actual backend URL:
+#
+# [[redirects]]
+#   from = "/api/*"
+#   to = "https://your-backend-service.onrender.com/api/:splat"
+#   status = 200
+#   force = true

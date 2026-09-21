@@ -30,7 +30,7 @@ class _ServerConfigDialogState extends State<ServerConfigDialog> {
   final List<Map<String, String>> _presets = [
     {
       'label': 'Host Wi-Fi (Current)',
-      'url': 'http://10.33.108.4:8080/api/v1',
+      'url': 'http://172.100.134.56:8080/api/v1',
       'desc': 'Direct Wi-Fi connection to host computer',
     },
     {
@@ -256,7 +256,7 @@ class _ServerConfigDialogState extends State<ServerConfigDialog> {
               enableSuggestions: false,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppTheme.textPrimary),
               decoration: InputDecoration(
-                hintText: 'http://10.33.108.4:8080/api/v1',
+                hintText: 'http://172.100.134.56:8080/api/v1',
                 prefixIcon: const Icon(Icons.link_rounded, color: AppTheme.primaryGold, size: 20),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.play_circle_outline_rounded, color: AppTheme.primaryGold),

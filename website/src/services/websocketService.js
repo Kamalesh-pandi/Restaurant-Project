@@ -1,6 +1,10 @@
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
+const RAW_API_BASE = import.meta.env.VITE_WS_BASE_URL || import.meta.env.VITE_API_BASE_URL || '';
+const WS_BASE_URL = RAW_API_BASE.replace(/\/+$/, '');
+const WS_ENDPOINT = WS_BASE_URL ? `${WS_BASE_URL}/ws` : '/ws';
+
 class WebSocketService {
   constructor() {
     this.client = null;
@@ -12,7 +16,7 @@ class WebSocketService {
     if (this.client && this.client.active) return;
 
     this.client = new Client({
-      webSocketFactory: () => new SockJS('/ws'),
+      webSocketFactory: () => new SockJS(WS_ENDPOINT),
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
